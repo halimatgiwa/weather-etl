@@ -1,0 +1,4 @@
+City,Temperature_C,Humidity_%,Weather_Condition,Wind_Speed_mps,Date_Time
+Lagos,24.48,93,Clouds,1.6,2026-08-21 00:16:10
+London,15.48,79,Clouds,3.6,2026-08-21 00:19:15
+New York,18.79,94,Rain,9.77,2026-08-21 00:17:14
