@@ -4,7 +4,7 @@ import pandas as pd
 
 
 
-API\_KEY = "b22c02774d4f8fc42a09893037688632"
+API\_KEY = "YOUR\_API\_KEY"
 
 
 
