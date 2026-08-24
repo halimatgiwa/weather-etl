@@ -1,108 +1,168 @@
-import requests
+# Weather Data ETL Pipeline Using Python & OpenWeather API
 
-import pandas as pd
+## Project Overview
 
+This project demonstrates the development of a simple **ETL (Extract, Transform, Load) pipeline** using Python and real-time weather data from the OpenWeather API.
 
+The pipeline extracts weather information for multiple cities, transforms the API response into a structured Pandas DataFrame, performs basic analysis, and loads the processed data into a CSV file for future analysis.
 
-API\_KEY = "YOUR\_API\_KEY"
+The project was completed as part of **Week 7: Data Pipelines & Automation** at AnalystLab Africa.
 
+---
 
+## Data Source
 
-cities = \["Lagos", "London", "New York"]
+**OpenWeather API**
 
+The OpenWeather API provides real-time weather information for locations around the world.
 
+Weather data was collected for the following cities:
 
-url = "https://api.openweathermap.org/data/2.5/weather"
+* Lagos
+* London
+* New York
 
+The API was used to retrieve:
 
+* City Name
+* Temperature
+* Humidity
+* Weather Condition
+* Wind Speed
+* Date and Time
 
-weather\_data = \[]
+---
 
+## ETL Process
 
+### 1. Extract
 
-for city in cities:
+The pipeline connects to the OpenWeather API using Python's `requests` library.
 
+Weather data is retrieved for three cities: Lagos, London, and New York.
 
+The API response is converted from JSON into a format that can be processed using Python.
 
-&#x20;   params = {
+### 2. Transform
 
-&#x20;       "q": city,
+The extracted weather information is organized into a structured Pandas DataFrame.
 
-&#x20;       "appid": API\_KEY,
+The transformation process includes:
 
-&#x20;       "units": "metric"
+* Selecting relevant weather fields
+* Renaming columns for clarity
+* Converting the API timestamp into a readable date and time format
+* Organizing the information into a clean tabular dataset
+* Preparing the dataset for analysis
 
-&#x20;   }
+### 3. Load
 
+The transformed dataset is saved as:
 
+`weather_data.csv`
 
-&#x20;   response = requests.get(url, params=params)
+The CSV file provides a reusable dataset that can be opened in Excel, Power BI, Python, or other data analysis tools.
 
+---
 
+## Tools Used
 
-&#x20;   if response.status\_code == 200:
+* **Python** – ETL pipeline development
+* **Pandas** – Data transformation and analysis
+* **Requests** – API connection and data extraction
+* **Jupyter Notebook** – Development and demonstration
+* **OpenWeather API** – Weather data source
+* **GitHub** – Source code and project documentation
 
-&#x20;       data = response.json()
+---
 
+## Project Structure
 
+```text
+weather-etl/
+│
+├── weather_etl.py
+├── weather_etl.ipynb
+├── weather_data.csv
+├── README.md
+├── .gitignore
+└── .env
+```
 
-&#x20;       weather\_data.append({
+> **Security Note:** The OpenWeather API key is stored locally in an environment file and is not included in the public repository.
 
-&#x20;           "City": data\["name"],
+---
 
-&#x20;           "Temperature\_C": data\["main"]\["temp"],
+## Steps Taken
 
-&#x20;           "Humidity\_%": data\["main"]\["humidity"],
+1. Created an OpenWeather API account.
+2. Generated an API key.
+3. Connected to the OpenWeather API using Python.
+4. Selected three cities for data collection.
+5. Extracted real-time weather information.
+6. Selected relevant fields from the API response.
+7. Organized the extracted information using Pandas.
+8. Converted the API timestamp into a readable datetime format.
+9. Created a clean weather dataset.
+10. Saved the processed dataset as a CSV file.
+11. Compared weather measurements across the selected cities.
+12. Documented the ETL pipeline and findings.
+13. Published the project source code on GitHub.
 
-&#x20;           "Weather\_Condition": data\["weather"]\[0]\["main"],
+---
 
-&#x20;           "Wind\_Speed\_mps": data\["wind"]\["speed"],
+## Basic Analysis
 
-&#x20;           "Date\_Time": pd.to\_datetime(data\["dt"], unit="s")
+The processed dataset was analyzed to compare weather conditions across the selected cities.
 
-&#x20;       })
+The analysis focused on:
 
+* City with the highest temperature
+* City with the highest humidity
+* City with the highest wind speed
+* Weather conditions recorded for each city
 
+### Key Findings
 
-df = pd.DataFrame(weather\_data)
+The analysis identified differences in temperature, humidity, wind speed, and weather conditions across Lagos, London, and New York.
 
+The exact results depend on the weather data returned by the OpenWeather API at the time of extraction because weather conditions change in real time.
 
+---
 
-print("\\nCleaned Weather Dataset:")
+## Key Learning Outcomes
 
-print(df)
+This project provided practical experience in building a basic data pipeline from an external API to a structured dataset.
 
+Key lessons learned include:
 
+* How to retrieve data from an external REST API using Python
+* How to work with JSON API responses
+* How to structure and transform raw data using Pandas
+* How to convert timestamps into readable datetime values
+* How to save processed data for future analysis
+* How ETL pipelines prepare raw data for analytical use
+* The importance of protecting API credentials when working with public repositories
+* How to document and version-control a data project using Git and GitHub
 
-df.to\_csv("weather\_data.csv", index=False)
+---
 
+## Conclusion
 
+This project demonstrates a complete basic ETL workflow:
 
-print("\\nWeather data successfully saved to weather\_data.csv")
+**Extract → Transform → Analyze → Load**
 
+The pipeline successfully retrieves real-time weather data, transforms it into a clean and structured dataset, performs basic comparisons, and stores the processed data in CSV format.
 
+The project also demonstrates the importance of separating sensitive API credentials from publicly shared source code.
 
-print("\\n--- BASIC WEATHER ANALYSIS ---")
+---
 
+## Author
 
+**Halimat Giwa**
 
-highest\_temp = df.loc\[df\["Temperature\_C"].idxmax()]
+B.Sc. Petroleum Chemistry | Energy Data Analyst
 
-highest\_humidity = df.loc\[df\["Humidity\_%"].idxmax()]
-
-highest\_wind = df.loc\[df\["Wind\_Speed\_mps"].idxmax()]
-
-
-
-print(f"Highest temperature: {highest\_temp\['City']} ({highest\_temp\['Temperature\_C']}°C)")
-
-print(f"Highest humidity: {highest\_humidity\['City']} ({highest\_humidity\['Humidity\_%']}%)")
-
-print(f"Highest wind speed: {highest\_wind\['City']} ({highest\_wind\['Wind\_Speed\_mps']} m/s)")
-
-
-
-print("\\nWeather conditions by city:")
-
-print(df\[\["City", "Weather\_Condition"]])
-
+GitHub: https://github.com/halimatgiwa
